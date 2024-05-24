@@ -409,7 +409,7 @@ sm_data <- function(dsid = NULL,
 #' Reshape Long API Data to Column-Based Format
 #'
 #' This function automatically reshapes long (stacked) raw data from the API (\code{\link[=sm_data]{sm_data(..., wide = FALSE)}}) to a wide format where each variable has its own column.
-#' It can also be used as a general purpose reshaping command - with an additional capability to handle variable labels.
+#' Internally it uses \code{\link[collapse]{pivot}} from \emph{collapse}.
 #'
 #' @param data raw data from the API: A long format data frame where all values are stacked in a value column.
 #' @param id_cols character. Temporal identifiers of the data. By default all variables in \code{\link{.SAMADB_T}} are selected.
@@ -417,7 +417,7 @@ sm_data <- function(dsid = NULL,
 #' @param values_from character. The column containing the data values.
 #' @param labels_from character. The column containing the labels describing the series.
 #' @param expand.date logical. \code{TRUE} will call \code{\link{sm_expand_date}} on the data after reshaping.
-#' @param \dots further arguments passed to \code{\link[data.table]{dcast}} or \code{\link{sm_expand_date}}, no conflicts between these two.
+#' @param \dots further arguments passed to \code{\link[collapse]{pivot}} or \code{\link{sm_expand_date}}.
 #'
 #' @return A \code{\link[data.table]{data.table}} with the reshaped data.
 #'
@@ -431,34 +431,30 @@ sm_data <- function(dsid = NULL,
 #'
 
 sm_pivot_wider <- function(data, id_cols = intersect(.SAMADB_T, names(data)),
-                      names_from = "series", values_from = "value",
-                      labels_from = if(any(names(data) == "label")) "label" else NULL,
-                      expand.date = FALSE, ...) {
-  # Needed for columns to be cast in order...
-  data <- ftransformv(data, names_from, qF, sort = FALSE)
-  # if(fnunique(get_vars(data, c(names_from, id_cols))) != fnrow(data))
-  #  data <- collapv(data, c(names_from, id_cols), fmedian, ffirst, sort = FALSE, na.rm = FALSE)
-  form <- as.formula(paste0(paste_clp(id_cols), " ~ ", paste_clp(names_from)))
-  res <- dcast(qDT(data), form, value.var = values_from, sep = "_", ...) # , fun.aggregate = median, na.rm = TRUE
-  if(length(labels_from)) {
-    noid <- -seq_along(id_cols)
-    namlab <- funique(.subset(data, c(names_from, labels_from)))
-    nam <- if(length(names_from) == 1L) namlab[[1L]] else
-      do.call(paste, c(namlab[names_from], list(sep = "_"))) # make sure sep is same as dcast...
-    lab <- namlab[[labels_from]][ckmatch(names(res)[noid], nam)]
-    vlabels(res)[noid] <- if(is.character(lab)) lab else as.character(lab)
-  }
+                           names_from = "series", values_from = "value",
+                           labels_from = if(any(names(data) == "label")) "label" else NULL,
+                           expand.date = FALSE, ...) {
+  res <- pivot_ellipsis(data, id_cols, values_from, names_from, labels_from, how = "wider", sort = "ids", ...) # collapse::pivot
   if(expand.date) return(sm_expand_date(res, ...)) else return(res)
 }
 
-# Helper used in sm_pivot_wider
-paste_clp <- function(x) if(length(x) == 1L) x else paste(x, collapse = " + ")
+# This is to allow ellipsis (...) arguments to be passed to both pivot and am_expand_data
+pivot_ellipsis <- function(data, ids = NULL, values = NULL, names = NULL, labels = NULL,
+                           how = "longer", na.rm = FALSE, factor = c("names", "labels"),
+                           check.dups = FALSE, nthreads = 1L, fill = NULL,
+                           drop = TRUE, sort = FALSE, transpose = FALSE, ...) {
+  pivot(data, ids = ids, values = values, names = names,
+        labels = labels, how = how, na.rm = na.rm, factor = factor,
+        check.dups = check.dups, nthreads = nthreads, fill = fill,
+        drop = drop, sort = sort, transpose = transpose)
+}
+
 
 
 #' Reshape Column-Based Data to Long Format
 #'
 #' This function automatically reshapes wide (column-based) data into a long format akin to the format of the raw data coming from the database (\code{\link[=sm_data]{sm_data(..., wide = FALSE)}}).
-#' It can also be used as a general purpose reshaping command - with an additional capability to handle variable labels.
+#' Internally it uses \code{\link[data.table]{melt}} from \emph{data.table}.
 #'
 #' @param data a wide format data frame where all series have their own column.
 #' @param id_cols character. Temporal identifiers of the data. By default all variables in \code{\link{.SAMADB_T}} are selected.

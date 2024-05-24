@@ -27,14 +27,14 @@ sm_pivot_wider(
 
 \item{expand.date}{logical. \code{TRUE} will call \code{\link{sm_expand_date}} on the data after reshaping.}
 
-\item{\dots}{further arguments passed to \code{\link[data.table]{dcast}} or \code{\link{sm_expand_date}}, no conflicts between these two.}
+\item{\dots}{further arguments passed to \code{\link[collapse]{pivot}} or \code{\link{sm_expand_date}}.}
 }
 \value{
 A \code{\link[data.table]{data.table}} with the reshaped data.
 }
 \description{
 This function automatically reshapes long (stacked) raw data from the API (\code{\link[=sm_data]{sm_data(..., wide = FALSE)}}) to a wide format where each variable has its own column.
-It can also be used as a general purpose reshaping command - with an additional capability to handle variable labels.
+Internally it uses \code{\link[collapse]{pivot}} from \emph{collapse}.
 }
 \examples{
 \donttest{

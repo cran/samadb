@@ -41,7 +41,7 @@ A \code{\link[data.table]{data.table}} with the reshaped data.
 }
 \description{
 This function automatically reshapes wide (column-based) data into a long format akin to the format of the raw data coming from the database (\code{\link[=sm_data]{sm_data(..., wide = FALSE)}}).
-It can also be used as a general purpose reshaping command - with an additional capability to handle variable labels.
+Internally it uses \code{\link[data.table]{melt}} from \emph{data.table}.
 }
 \examples{
 \donttest{

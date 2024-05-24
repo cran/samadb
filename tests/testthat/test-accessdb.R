@@ -1,5 +1,5 @@
 
-data <- sm_data("ELECTRICITY", from = 2000)
+data <- tryCatch(sm_data("ELECTRICITY", from = 2000), error = function(e) NULL)
 
 if(length(data) && fnrow(data) > 1L) test_that("reshaping works", {
 

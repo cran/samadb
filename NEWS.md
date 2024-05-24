@@ -1,3 +1,11 @@
+# samadb 0.3.0
+
+- The database has been moved, and the connection changed accordingly. All users should update the package. 
+
+- The package now displays a startup message reminding users that the main data provider, [EconData](https://econdata.co.za/), provides free datasets only for non-commercial users. Other users must obtain a license at https://econdata.co.za/support/.  
+
+- `sm_pivot_wider()` has become faster by internally replacing `data.table::dcast()` by `collapse::pivot()`. 
+
 # samadb 0.2.6
 
 - Minor changes demanded by CRAN

@@ -45,8 +45,8 @@
 #' @importFrom stats as.formula setNames
 #' @importFrom DBI dbConnect dbGetQuery dbDisconnect
 #' @importFrom RMySQL MySQL
-#' @importFrom collapse collapv ffirst fmedian funique ftransformv get_vars get_vars<- date_vars add_vars add_vars<- cat_vars ss qF vlabels vlabels<- ckmatch qDT fnobs fnrow fncol unattrib namlab allNA whichNA
-#' @importFrom data.table setDT fifelse melt dcast transpose setcolorder %ilike%
+#' @importFrom collapse collapv pivot ffirst fmedian funique ftransformv get_vars get_vars<- date_vars add_vars add_vars<- cat_vars ss qF vlabels vlabels<- ckmatch qDT fnobs fnrow fncol unattrib namlab allNA whichNA
+#' @importFrom data.table setDT melt fifelse transpose setcolorder %ilike%
 #' @importFrom writexl write_xlsx
 #'
 NULL
@@ -54,7 +54,7 @@ NULL
 
 .onAttach <- function(libname, pkgname) {
 
-  packageStartupMessage(paste0("samadb ", packageVersion("samadb"), ", see help(samadb)"))
+  packageStartupMessage(paste0("samadb ", packageVersion("samadb"), ", see help(samadb). Commercial users require a license at https://econdata.co.za/support/"))
 
 }
 
@@ -66,15 +66,8 @@ NULL
 
 .connect <- function() {
   tryCatch({
-
-    if(isTRUE(getOption("samadb_localhost"))) {
-      dbConnect(MySQL(), user = 'IFW_READ_LOCAL', password = '$QL5Dbg8+^g`)$D.',
-                dbname = 'SAMADB', host = 'localhost')
-    } else {
       dbConnect(MySQL(), user = 'SAMADB_READ', password = '0c7Wg975vj',
-                dbname = 'SAMADB', port = 3306L, host = '102.214.9.99')
-    }
-
+                dbname = 'SAMADB', port = 3306L, host = '102.214.9.244')
   }, error = function(e) {
     message("Could not connect to database. Please make sure your internet connection is working, and your firewall does not block remote IP connections.")
     NULL})

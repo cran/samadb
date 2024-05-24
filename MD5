@@ -1,8 +1,8 @@
-3f070d3101b6ea43f5b821af9402dc8c *DESCRIPTION
-ee77d495f10d440efbc6dd7105b004b1 *NAMESPACE
-c3abe44744eb0682540d31b38092f401 *NEWS.md
-d9c1b3dbf897cab9a6dd5f0f321f02ab *R/accessdb.R
-5a72b46ee32e42facaeeb9cd9884624d *R/samadb.R
+7e26befd673b102aa9ac90e1a3dab7ac *DESCRIPTION
+b0b4f8f2390e281734f65ea23b204fec *NAMESPACE
+8b6421950773edea42e94e703c8fb51e *NEWS.md
+ab1fcba233698956bbdd3606ec92c63f *R/accessdb.R
+381580f953674c8c856a2cd85263fff5 *R/samadb.R
 b33ba4b0b304fcdae3c207af93d42e66 *man/dot-SAMADB_ID.Rd
 469da1f1122b12f190fb4431ed67fbdb *man/samadb-package.Rd
 9f849b91d92e065bb0654f2677931de8 *man/sm_as_date.Rd
@@ -10,10 +10,10 @@ b33ba4b0b304fcdae3c207af93d42e66 *man/dot-SAMADB_ID.Rd
 eb9994e377db2a4a799cbcb74e219113 *man/sm_datasets.Rd
 335814abe26570079609762015362b47 *man/sm_datasources.Rd
 f3a362ab9f46cbdc011829514a14d3e8 *man/sm_expand_date.Rd
-4f14b0e643b987af98300fb13a0e7717 *man/sm_pivot_longer.Rd
-3dcf5a233d185ae866710cbf6479bdfc *man/sm_pivot_wider.Rd
+13afbe3db95109718341c7b56065da91 *man/sm_pivot_longer.Rd
+040a252c26953c759bf92f2e0ea1cd95 *man/sm_pivot_wider.Rd
 2d88920c5bb443e76f4e88ba7e4e4a98 *man/sm_series.Rd
 fe20e7b3c28f30d223d4d6d084bd8fa1 *man/sm_transpose.Rd
 a37d44723ecff0a4a94348e08bd1b0c9 *man/sm_write_excel.Rd
 218245b290bb242e7c1b2eeb065bf93f *tests/testthat.R
-0c0447b666c27abd4d59334b7bd78e90 *tests/testthat/test-accessdb.R
+384651cb9b85078f73e168df681d20f1 *tests/testthat/test-accessdb.R
